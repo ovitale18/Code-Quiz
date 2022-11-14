@@ -13,8 +13,12 @@ function startTimer() {
     if(secondsLeft === 0) {
       clearInterval(timerInterval);
       
-      sendMessage();
+      quizOver();
     }
 
   }, 1000);
+}
+
+function quizOver(){
+    
 }

@@ -1,23 +1,60 @@
-//Timer
-var timeEl = document.querySelector(".timer");
-var secondsLeft = 100;
+//FUNCTIONS
+function buildQuiz(){ ... }; 
+function showResults(){ ... };
 
-document.querySelector("#start").addEventListener("click", startTimer);
+//VARIABLES
+const quizContainer = document.getElementById('quiz');
+const resultsContainer = document.getElementById('results');
+const submitButton = document.getElementById('submit');
+const myQuestions = [ ... ];
 
-function startTimer() {
-  var timerInterval = setInterval(function () {
-    secondsLeft--;
-    timeEl.textContent = " Time Remaining: " + secondsLeft;
-
-    if (secondsLeft === 0) {
-      clearInterval(timerInterval);
-
-      quizOver();
+//START
+function buildQuiz(){
+  const output = [];
+  myQuestions.forEach(
+    (currentQuestion, questionNumber) => {
+      const answers = [];
+      for(letter in currentQuestion.answers){
+        answers.push(
+          `<label>
+          <input type="radio" name="question${questionNumber}" value="${letter}">
+          ${letter} :
+          ${currentQuestion.answers[letter]}
+          </label>`
+        );
+      }
+      output.push(
+        `<div class="question"> ${currentQuestion.question} </div>
+        <div class="answers"> ${answers.join('')} </div>`
+      );
     }
-  }, 1000);
+    );
+    quizContainer.innerHTML = output.join('');
 }
 
-function quizOver() {}
+function showResults(){
+  const answerContainers = quizContainer.querySelectorAll('.answers');
+  let numCorrect = 0;
+  myQuestions.forEach( (currentQuestion, questionNumber) => {
+    const answerContainer = answerContainers[questionNumber];
+    const selector = `input[name=question${questionNumber}]:checked`;
+    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+    if(userAnswer === currentQuestion.correctAnswer){
+      numCorrect++;
+      answerContainers[questionNumber].getElementsByClassName.color = 'lightgreen';
+
+    }
+    else{
+      answerContainers[questionNumber].stylecolor = 'red';
+    }
+  })
+}
+
+//EVENT LISTENERS
+submitButton.addEventListener('click', showResults);
+
+
 
 //QUESTIONS
 const myQuestions = [
@@ -59,7 +96,7 @@ const myQuestions = [
     c: "var"
   }
   correctAnswer: "a"
-}
+},
 
 {
   question: "What does the keyword var do?",
@@ -69,7 +106,7 @@ const myQuestions = [
     c: "exits a function"
   }
   correctAnswer: "a"
-}
+},
 
 {
   question: "What do we use strings for in JavaScript?",
@@ -79,5 +116,26 @@ const myQuestions = [
     c: "playing mp3 files"
   }
   correctAnswer: "b"
-}
+},
 ]
+
+//Timer
+var timeEl = document.querySelector(".timer");
+var secondsLeft = 100;
+
+document.querySelector("#start").addEventListener("click", startTimer);
+
+function startTimer() {
+  var timerInterval = setInterval(function () {
+    secondsLeft--;
+    timeEl.textContent = " Time Remaining: " + secondsLeft;
+
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+
+      quizOver();
+    }
+  }, 1000);
+}
+
+function quizOver() {}

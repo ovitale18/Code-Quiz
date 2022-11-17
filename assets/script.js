@@ -1,60 +1,55 @@
 //FUNCTIONS
-function buildQuiz(){ ... }; 
-function showResults(){ ... };
+// function buildQuiz(){ ... };
+// function showResults(){ ... };
 
 //VARIABLES
-const quizContainer = document.getElementById('quiz');
-const resultsContainer = document.getElementById('results');
-const submitButton = document.getElementById('submit');
-const myQuestions = [ ... ];
+const quizContainer = document.getElementById("quiz");
+const resultsContainer = document.getElementById("results");
+const submitButton = document.getElementById("submit");
+// const myQuestions = [ ... ];
 
 //START
-function buildQuiz(){
+function buildQuiz() {
   const output = [];
-  myQuestions.forEach(
-    (currentQuestion, questionNumber) => {
-      const answers = [];
-      for(letter in currentQuestion.answers){
-        answers.push(
-          `<label>
+  myQuestions.forEach((currentQuestion, questionNumber) => {
+    const answers = [];
+    for (letter in currentQuestion.answers) {
+      answers.push(
+        `<label>
           <input type="radio" name="question${questionNumber}" value="${letter}">
           ${letter} :
           ${currentQuestion.answers[letter]}
           </label>`
-        );
-      }
-      output.push(
-        `<div class="question"> ${currentQuestion.question} </div>
-        <div class="answers"> ${answers.join('')} </div>`
       );
     }
+    output.push(
+      `<div class="question"> ${currentQuestion.question} </div>
+        <div class="answers"> ${answers.join("")} </div>`
     );
-    quizContainer.innerHTML = output.join('');
+  });
+  quizContainer.innerHTML = output.join("");
 }
 
-function showResults(){
-  const answerContainers = quizContainer.querySelectorAll('.answers');
+function showResults() {
+  const answerContainers = quizContainer.querySelectorAll(".answers");
   let numCorrect = 0;
-  myQuestions.forEach( (currentQuestion, questionNumber) => {
+  myQuestions.forEach((currentQuestion, questionNumber) => {
     const answerContainer = answerContainers[questionNumber];
     const selector = `input[name=question${questionNumber}]:checked`;
     const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
-    if(userAnswer === currentQuestion.correctAnswer){
+    if (userAnswer === currentQuestion.correctAnswer) {
       numCorrect++;
-      answerContainers[questionNumber].getElementsByClassName.color = 'lightgreen';
-
+      answerContainers[questionNumber].getElementsByClassName.color =
+        "lightgreen";
+    } else {
+      answerContainers[questionNumber].stylecolor = "red";
     }
-    else{
-      answerContainers[questionNumber].stylecolor = 'red';
-    }
-  })
+  });
 }
 
 //EVENT LISTENERS
-submitButton.addEventListener('click', showResults);
-
-
+submitButton.addEventListener("click", showResults);
 
 //QUESTIONS
 const myQuestions = [
@@ -63,9 +58,9 @@ const myQuestions = [
     answers: {
       a: "Abe Lincoln",
       b: "Freddy Mercury",
-      c: "Brendan Eich"
-    }
-    correctAnswer: "c"
+      c: "Brendan Eich",
+      correctAnswer: "c",
+    },
   },
 
   {
@@ -73,51 +68,51 @@ const myQuestions = [
     answers: {
       a: "script.js",
       b: "index.html",
-      c: "style.css"
-    }
-    correctAnswer: "a"
-},
+      c: "style.css",
+      correctAnswer: "a",
+    },
+  },
 
-{
-  question: "Which of these do we put around values in a string?",
-  answers: {
-    a: "paranthesis",
-    b: "quotation marks",
-    c: "periods"
-  }
-  correctAnswer: "b"
-},
+  {
+    question: "Which of these do we put around values in a string?",
+    answers: {
+      a: "paranthesis",
+      b: "quotation marks",
+      c: "periods",
+      correctAnswer: "b",
+    },
+  },
 
-{
-  question: "Which of these is NOT a JavaScript keyword?",
-  answers: {
-    a: "boy",
-    b: "let",
-    c: "var"
-  }
-  correctAnswer: "a"
-},
+  {
+    question: "Which of these is NOT a JavaScript keyword?",
+    answers: {
+      a: "boy",
+      b: "let",
+      c: "var",
+      correctAnswer: "a",
+    },
+  },
 
-{
-  question: "What does the keyword var do?",
-  answers: {
-    a: "declares a variable",
-    b: "declares a function",
-    c: "exits a function"
-  }
-  correctAnswer: "a"
-},
+  {
+    question: "What does the keyword var do?",
+    answers: {
+      a: "declares a variable",
+      b: "declares a function",
+      c: "exits a function",
+      correctAnswer: "a",
+    },
+  },
 
-{
-  question: "What do we use strings for in JavaScript?",
-  answers: {
-    a: "running functions",
-    b: "storing and manipulating text",
-    c: "playing mp3 files"
-  }
-  correctAnswer: "b"
-},
-]
+  {
+    question: "What do we use strings for in JavaScript?",
+    answers: {
+      a: "running functions",
+      b: "storing and manipulating text",
+      c: "playing mp3 files",
+      correctAnswer: "b",
+    },
+  },
+];
 
 //Timer
 var timeEl = document.querySelector(".timer");
